@@ -1,0 +1,169 @@
+---
+title: "Lab 13 MATH 4322"
+author: "Bagging, Random Forest and Boosting"
+date: "Fall 2023"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+  word_document: default
+header-includes: \usepackage{amsbsy}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+* We will apply bagging, random forests and boosting to the `Boston` data, using the `randomForest` package.
+* $Note$:  The exact results obtained in this lab may depend on the version of `R` and the version of the `randomForest` package installed on your computer.  Give the results from your computer.
+*  You can use the `Rmarkdown` script given or write down your answers and scan them as a pdf file to upload in Canvas similar to your homework.
+*  Possible points: 10.
+
+\textcolor{red}{Question 1}: For any data that has $p$ predictors **bagging** requires that we consider how many predictors at each split in a tree?  
+\(\vspace{5em}\)
+
+**There are p predictors.**
+
+First, we call the data and create training/testing sets.
+
+```{r,results='hide'}
+library(ISLR2)
+set.seed(1)
+train = sample(1:nrow(Boston),nrow(Boston)/2)
+boston.test = Boston[-train,"medv"]
+```
+
+## Bagging  
+
+We perform bagging as follows: 
+
+```{r,results='hide',warning=FALSE,message=FALSE,error=FALSE}
+library(randomForest)
+set.seed(10)
+bag.boston = randomForest(medv~., data = Boston,
+                          subset = train,
+                          mtry = ncol(Boston) - 1,
+                          importance = TRUE)
+bag.boston
+```
+\textcolor{red}{Question 2}: What is the *MSE* based on the training set?  
+\(\vspace{5em}\)
+
+**The MSE is equal to 11.69993.**
+
+\newpage
+How well does this bagged model perform on the test set? 
+
+\textcolor{red}{Question 3}:  What is the formula to determine the *MSE*?  
+\(\vspace{5em}\)
+
+**MSE = (1/n) * sum((yi-^yi)^2)**
+
+Run the following in `R`.  
+
+```{r,results='hide'}
+yhat.bag = predict(bag.boston,newdata = Boston[-train,])
+plot(yhat.bag,boston.test)
+abline(0,1)
+mean((yhat.bag - boston.test)^2)
+```
+
+\textcolor{red}{Question 4}: What is the *MSE* of the test data set?
+
+**The MSE of the test data set is 23.23877.**
+
+\newpage
+
+We could change the number of trees grown by `randomForest()` using the `ntree` argument:  
+
+```{r,results='hide'}
+bag.boston = randomForest(medv ~ ., data = Boston, 
+                          subset = train,
+                          mtry = ncol(Boston) - 1,
+                          ntree = 25)
+bag.boston
+yhat.bag = predict(bag.boston,newdata = Boston[-train,])
+mean((yhat.bag - boston.test)^2)
+```
+
+
+\textcolor{red}{Question 5}:  What method do we use to get the different trees?  
+\(\vspace{5em}\)
+
+**We use bootstrapping to get the different trees.**
+
+## Random Forests  
+
+\textcolor{red}{Question 6}:  For a building a random forest of regression trees, what should be  `mtry` (number of predictors to consider at each split)?  
+\(\vspace{5em}\)
+
+**(Number of predictors) / 3**
+
+Type and run the following in `R`:
+
+```{r,results='hide'}
+set.seed(10)
+rf.boston = randomForest(medv ~., data = Boston,
+                         subset = train,
+                         mtry = (ncol(Boston)-1)/3,
+                         importance = TRUE)
+yhat.rf = predict(rf.boston,newdata = Boston[-train,])
+mean((yhat.rf - boston.test)^2)
+```
+
+\textcolor{red}{Question 7}: Compare the *MSE* of the test data to the *MSE* of the bagging.  
+\(\vspace{5em}\)
+
+**Test has a smaller MSE.**
+
+\textcolor{red}{Question 8}:  Use the `importance()` function what are the two most important variables?
+
+**The two most important variables are rm & lstat.**
+
+```{r,results='hide',fig.keep='none'}
+importance(rf.boston)
+varImpPlot(rf.boston)
+```
+
+\newpage
+
+## Boosting  
+
+Run the following in `R`:
+
+```{r,results='hide',fig.keep='none'}
+library(gbm)
+set.seed(1)
+boost.boston = gbm(medv ~., data = Boston[train,],
+                   distribution = "gaussian", 
+                   n.trees = 5000,
+                   interaction.depth = 4)
+summary(boost.boston)
+```
+
+\textcolor{red}{Question 9}:  What are the two most important variables with the boosted trees?  
+\(\vspace{5em}\)
+
+**The two most important variables here are rm & lstat.**
+
+We can produce *partial dependence plots* for these two variables.  The plots illustrate the marginal effect of the selected variables on the response after *integrating* out the other variables.
+
+```{r}
+plot(boost.boston,i = "rm")
+plot(boost.boston,i = "lstat")
+```
+
+Notice that the house prices are increasing with `rm` and decreasing with `lstat`.  
+
+We will use the boosted model to predict `medv` on the test set:  
+
+```{r,results='hide'}
+yhat.boost = predict(boost.boston,
+                     newdata = Boston[-train,],
+                     n.trees = 5000)
+mean((yhat.boost - boston.test)^2)
+```
+
+\textcolor{red}{Question 10}:  Compare this *MSE* to the *MSE* of the random forest and bagging models.
+
+**The MSE is smaller than both others but close to the test set’s MSE.**

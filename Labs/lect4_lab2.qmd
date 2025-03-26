@@ -1,0 +1,225 @@
+---
+title: "Linear Regression and Using Quarto in Rstudio"
+subtitle: "Lab 2 - MATH 4322"
+format: pdf
+highlight-style: github
+code-block-bg: true
+code-block-border-left: "#31BAE9"
+header-includes: 
+- \newcommand{\bi}{\begin{itemize}}
+- \newcommand{\ei}{\end{itemize}}
+- \newcommand{\iset}{\setlength\itemsep{1em}}
+- \usepackage{amsbsy}
+- \usepackage{hyperref}
+- \usepackage{multicol}
+- \newcommand{\blue}[1]{\textcolor{blue}{#1}}
+- \newcommand{\red}[1]{\textcolor{red}{#1}}
+---
+
+
+## Quarto
+
+* Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.  
+* When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+
+1 + 1
+```
+
+You can add options to executable code like this 
+
+```{r}
+
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).  
+
+* To use Quarto, you need to install this as a package `install.packages("quarto")`
+
+## Set Up for Lab 
+
+* Open up `RStudio`.  
+* Click `File` $\rightarrow$ `New File` $\rightarrow$ `Quarto Document`.  
+*  Select which output format you want to use.  
+*  You will be instructed to give the output of `R` and answer questions for this lab.  
+* Make sure you save this file.  
+* The questions that I want you to respond to will be in \red{red}. Type that answer in your `.qmd` file.  
+* After finishing you can **Render** the file to get a finished file with text and `R` output.  
+* If you use this `.qmd` file you need to delete in the code blocks `#| results: hide`, `#| fig-show: hide` and `#| eval: false`.  
+* *Note*: If you want to use PDF output you have to install the package `tinytex` in `RStudio` then you can use LaTex syntax.  
+
+## Code Chunks
+
+*  The R Markdown is a text file with code chunks.  
+*  You type in any text and if you want to use `R`.  
+*  To insert a code chunk you type in ` ```{r}` at the beginning and  ` ``` ` at the end.  
+* To get the headings type in a double hashtag, #.  
+
+
+## Task 1
+
+*  We will use the `Boston` data set from the `ISLR2` library.
+*  You will need to install that package and call it.  In your console type in.
+
+```{r}
+install.packages("ISLR2")
+```
+
+* In your R Markdown file type in as a chunk
+
+```{r}
+library(ISLR2)
+head(Boston)
+```
+
+* We are wanting to find a linear model with `medv` (median house value per $1000) as the response (output) and `rm` (average number of rooms per dwelling) as the predictor (input).  
+* \red{Question 1}:  For the 6th suburb of Boston what is the median house value and the average number of rooms per dwelling? 
+```{r}
+summary(Boston[6,]$medv)
+summary(Boston[6,]$rm) 
+#OR
+Boston$medv[6]
+Boston$rm[6]
+#Answer: medv = 28.7, rm = 64.3
+```
+
+##  Task 2
+
+* We can add plots to the rendered file by in the code chunk type in 
+
+```{r}
+plot(Boston$rm,Boston$medv,xlab = "rm",ylab = "medv")
+```
+
+* \red{Question 2}:  According to the plot what is the relationship between median value of homes and average number of rooms per dwelling? 
+```{R}
+#Answer: There is a positive linear relationship
+```
+
+## Task 3
+
+* We can use the functions `which.max()`, `which.min()`, and `which()` to see certain observations.  Type and run the following in `R`.
+
+```{r}
+which.max(Boston$rm)
+which.min(Boston$rm)
+```
+
+* \red{Question 3}:  Which observation has the largest average number of rooms per dwelling?  What is the largest average number of rooms per dwelling?  
+```{R}
+#Answer: Observation 365 has the largest average number of rooms per dwelling.
+Boston[365,]$rm
+#Answer: The largest average number of rooms per dwelling 8.78
+```
+* \red{Question 4}:   Which observation has the smallest average number of rooms per dwelling?  What is the smallest average number of rooms per dwelling? 
+```{R}
+#Answer: Observation 366 has the smallest average number of rooms per dwelling.
+Boston[366,]$rm
+#Answer: The largest average number of rooms per dwelling 3.561
+
+```
+## Task 4
+
+* In a code chunk type:
+
+```{r}
+
+
+lm.fit <- lm(medv ~ rm, data = Boston)
+summary(lm.fit)
+```
+
+* \red{Question 5}:  Give the linear model equation.
+```{R}
+#Answer: y = -34.671 +  9.102x
+```
+* \red{Question 6}:  What is the percent of variation of `medv` that can be explained by this model?  
+```{R}
+#Answer: 0.4835 percent of variation
+```
+* \red{Question 7}:  Is `rm` a good predictor for `medv`?  Justify your answer.  
+```{R}
+#Answer: No, since it is not close to even half of the standard variation
+
+
+```
+## Task 5
+
+* In a code chunk type:
+
+```{r}
+confint(lm.fit)
+```
+
+* \red{Question 8}:  What is the 95% confidence interval for the slope $\beta_1$ of this model?
+
+```{r}
+#Answer: The 95% confidence interval is 8.278855, 9.925363 ```
+```
+## Task 6
+
+* The `predict()` function can be used to produce predictions, confidence interval and prediction intervals for the prediction of `medv` for a given value of `rm`.
+* The \textbf{confidence interval} is used to determine the $average$ predicted value for the response variable.
+* The \textbf{prediction interval} is used to determine the prediction for $one$ observation of the response variable.
+*  Suppose we want to determine a predicted value of `medv` based on the average number of rooms per dwelling at 5, 6, and 7.  We can type the following in a code chunk
+
+```{r}
+predict(lm.fit, data.frame(rm = c(5, 6, 7)))
+predict(lm.fit, data.frame(rm = c(5, 6, 7)), interval = "confidence")
+predict(lm.fit, data.frame(rm = c(5, 6, 7)), interval = "prediction")
+```
+
+* \red{Question 9}:  What is the predicted median value of homes where the average number of rooms per dwelling is 5? 
+
+* Notice that the **confidence interval** for 5 is [9.634, 12.045]. The interpretation is: on *average* the median value of the homes in all of the suburbs with average of 5 rooms is between $9,634 and $12,45. 
+
+* Notice that the **prediction interval** for 5 is [-2.214, 23.894].  The interpretation is: if we look at *one* suburb, the predicted median home value for that suburb will be between -$2,214 and $23,894.  
+```{R}
+#Answer:The predicted median value of homes where the average number of rooms per dwelling is 5 is 10.83992
+```
+
+## Task 7
+
+* We can check assumptions through the plots of the model.
+* Using the code chunk type:
+
+```{r}
+par(mfrow = c(2,2))
+plot(lm.fit)
+```
+
+* \red{Question 10}:  Do there appear to be extreme values?  
+*  We can use the leverage statistics to determine extreme values.  The function to find the leverage statistics `hatvalues()`.  
+* Using the code chunk type:
+```{r}
+#Answer: Yes, they appear to be extreme values
+```
+
+
+```{r}
+which.max(hatvalues(lm.fit))
+```
+
+* The `which.max()` function identifies the index (row) of the largest element of a vector.  
+* \red{Question 11}:  Which row has the largest leverage?  
+* Using the code chunk type: `Boston[number of largest leverage,]`.
+
+```{r}
+Boston[366,]
+#Answer: Row 366
+```
+
+* \red{Question 12}:  How many average number of rooms per dwelling and what is the median value of the homes in this suburb?  
+```{R}
+#Answer: rm = 3.561, medv = 27.5
+```
+
+## Completing 
+
+* Make sure you save this file.  
+* You can click on the `Render` icon in the tool bar.  
+* Upload the rendered file (PDF) to Canvas under Lab 2 in today's lecture.
+
+

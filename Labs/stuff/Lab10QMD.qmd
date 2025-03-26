@@ -1,0 +1,238 @@
+---
+title: "Cross Validation"
+subtitle: "Lab 10 - MATH 4322"
+format: pdf
+highlight-style: github
+code-block-bg: true
+code-block-border-left: "#31BAE9"
+header-includes: 
+- \newcommand{\bi}{\begin{itemize}}
+- \newcommand{\ei}{\end{itemize}}
+- \newcommand{\iset}{\setlength\itemsep{1em}}
+- \usepackage{amsbsy}
+- \usepackage{hyperref}
+- \usepackage{multicol}
+- \newcommand{\blue}[1]{\textcolor{blue}{#1}}
+- \newcommand{\red}[1]{\textcolor{red}{#1}}
+---
+
+## Problem
+
+We will use the data \blue{Weekly} in the `ISLR` package to predict \blue{Direction} using \blue{Lag1} and \blue{Lag2}.  
+
+**Description**
+
+Weekly percentage returns for the S&P 500 stock index between 1990 and 2010.  
+
+\blue{Lag1} Percentage return for previous week  
+\blue{Lag2} Percentage return for 2 weeks previous  
+\blue{Direction} A factor with levels Down and Up indicating whether the market had a positive or negative return on a given week  
+
+```{r}
+#| echo: false
+library(ISLR)
+summary(Weekly)
+```
+
+\red{Question 1}:  Is this a regression or classification problem?  
+  
+    This is a classification problem because the response variable is binary.
+
+\red{Question 2}:  Which is the correct model, linear regression or logistic regression?  
+
+
+    Between the 2 models the logistic regression is the correct model.
+
+\red{Question 3}:  Write out the equation of the correct model.  
+
+$$\hat{Direction} = \frac{exp(\beta_0 + beta_1 x Lag1 + beta_2 x Lag2)}
+{1 + exp(\beta_0 + beta_1 x Lag1 + beta_2 x Lag2)}$$
+
+
+## Task 1
+
+Fit a logistic regression model that predicts \blue{Direction} using \blue{Lag1} and \blue{Lag2} on half of the data. This is the **training** data.
+
+\red{Question 4}:  In R what code do we use to separate the data into a train and test data.  
+
+```{r}
+#| echo: true
+library(ISLR)
+set.seed(100)
+sample = sample(1:nrow(Weekly), nrow(Weekly)/2)
+train = Weekly[sample,]
+test = Weekly[-sample,]
+```
+
+
+\red{Question 5}: In R what code do would we use to get a model to predict direction based on lag1 and lag2?
+
+Use this model to predict the direction of the first observation.
+You can do this by predicting that the first observation
+will go up if $P(Direction = \text{"Up"}|Lag1, Lag2) > 0.5$
+
+\vspace{2em}
+
+```{r}
+#| echo: true
+direction.glm = glm(Direction ~ Lag1 + Lag2, data = train, family = binomial)
+direction.glm
+```
+
+
+\red{Question 6}:  What is the code to get a prediction of the first observation?  
+
+```{r}
+predict.glm(direction.glm, newdata = Weekly[1,], type = "response")
+```
+
+```{r}
+Weekly[1,]$Direction
+```
+
+
+\red{Question 7}:  Would we predict the first observation to go up or down?  
+
+    We would predict the first observation to go up.
+
+\red{Question 8}:  Is the a correct prediction or miss classified?  
+
+    The original observation is going Down, so this is misclassified.
+
+We want to create a confusion matrix to determine the proportion of miss classified           observations.  This is called the *error rate*.
+
+\red{Question 9}:  What is the code to create this confusion matrix?  
+
+```{r}
+#| echo: true
+pred.train = predict.glm(direction.glm, type = "response")
+pred.direction.train = ifelse(pred.train > 0.5, "Up", "Down")
+(confmat.train = table(train$Direction, pred.direction.train))
+```
+\vspace{2em}
+
+\red{Question 10}:  What is the error rate based on the training data?  
+
+```{r}
+(confmat.train[1, 2] + confmat.train[2, 1])/sum(confmat.train)
+```
+
+
+## Task 2  
+
+Use this trained model to make a prediction from the data that we did not use.  This is the **test** data.
+
+```{r}
+pred.test = predict.glm(direction.glm, newdata = test)
+pred.direction.test = ifelse(pred.test > 0.5, "Up", "Down")
+(confmat.test = table(test$Direction, pred.direction.test))
+```
+
+
+\red{Question 11}:  What is the test error rate?  
+
+```{r}
+(confmat.test[1,2] + confmat.test[2,1])/sum(confmat.test)
+```
+
+
+## Task 3
+
+We want to create a LOOCV test error rate for the whole data using a for loop.  
+
+Write a for loop from $i = 1$ to $i = n$, where $n$ is the number of observations in the data set, that performs each of the following steps:
+
+i. Fit a logistic regression model using all but the $i^{th}$ observation to predict Direction using Lag1 and Lag2.
+ii. Compute the posterior probability of the market moving up
+for the $i^{th}$ observation.
+iii. Use the posterior probability for the $i^th$ observation in order to predict whether or not the market moves up.
+iv. Determine whether or not an error was made in predicting
+the direction for the $i^{th}$ observation. If an error was made,
+then indicate this as a 1, and otherwise indicate it as a 0.  
+
+```{r}
+#| echo: true
+#| warning: false
+#| message: false
+#| results: hide
+loocv.err = NA
+for (i in 1:nrow(Weekly)){
+  sample = i
+  fit.glm = glm(Direction ~ Lag1 + Lag2,data = Weekly[-sample,],
+                family = binomial)
+  pred.fit = predict.glm(fit.glm,Weekly[sample,],
+                         type = "response")
+  pred.direction = ifelse(pred.fit>0.5,"Up","Down")
+  loocv.err[i] = (Weekly[sample,]$Direction != pred.direction)
+}
+
+```
+
+
+\red{Question 12}:  Take the average of the $n$ numbers obtained in **iv** in order to obtain the LOOCV estimate for the test error. What is the value?  
+
+\vspace{1em}
+
+```{r}
+#| echo: true
+mean(loocv.err)
+```
+
+
+
+## Task 4 
+
+We will use the `cv.glm` function to determine LOOCV estimate for the test error.  Since the response is binary, we will have to create a  **cost** function to determine what probability we want to use as a cut off for "Up".  
+
+
+
+```{r}
+#| echo: true
+#| results: hide
+library(boot)
+#Since the response is a binary variable an appropriate cost function is
+cost <- function(r, pi = 0) mean(abs(r-pi) > 0.5)
+direction.glm =  glm(Direction ~ Lag1 + Lag2, data = Weekly,family = binomial)
+cv.glm(Weekly,direction.glm,cost)$delta[1]
+```
+
+\red{Question 13}: Give the cross validation estimate from this method.  Compare this to the value in Task 3, is it the same, higher or lower?  
+
+\vspace{1em}
+
+    This is the same as previous value.
+
+
+## Task 5
+
+We will do a 10-fold cross validation
+
+```{r}
+#| echo: true
+#| results: hide
+set.seed(10)
+cv.glm(Weekly,direction.glm,cost, K = 10)$delta[1]
+```
+
+\red{Question 14}:  Is this the same value as the loocv error?
+
+
+    This is not the same value.
+
+\red{Question 15}:  Repeat the `cv.glm` code again.  Do you get the same value?  
+
+\vspace{2em}
+
+```{r}
+#| echo: true
+#| results: hide
+cv.glm(Weekly,direction.glm,cost, K = 10)$delta[1]
+```
+
+\vspace{1em}
+    
+    We do not get the same value as before.
+
+\red{Question 16}:  What does the CV value represent in this scenario?  
+
+    The CV is from the 10 samples, the average error rate.

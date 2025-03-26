@@ -1,0 +1,39 @@
+---
+title: "Lab 17"
+author: "Alvaro Urtaza"
+date: "2023-04-18"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+{Question 1}:  Does there seem to be a difference in the measurements for each of the species of iris?
+
+**Yes**
+
+{Question 2}:  Which variables are highly correlated?  
+
+**Petal.length, Sepal.length. Petal.length, Petal.width. Sepal.length, pedal.width**
+
+{Question 3}:  What is the test error rate?  
+
+**2/30 = 0.0667.**
+
+{Question 4}:  What is the accuracy for the validation data?
+
+**The accuracy for the validation data is 0.8333.**
+
+{Question 5}:  What is the validation accuracy after 1000 epochs?
+
+**The validation accuracy after 1000 epochs should be 0.9583.**
+
+{Question 6}:  What is the accuracy rate of the test data with this model?  
+
+**The accuracy rate of the test data with this model is 1.0.** 
+
