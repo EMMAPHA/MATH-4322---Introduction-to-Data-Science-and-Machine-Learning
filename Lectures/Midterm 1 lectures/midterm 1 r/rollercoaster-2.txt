@@ -1,0 +1,114 @@
+Rollercoaster	Amusement Park	Type	Length	Height	Speed
+Viper	Six Flags Great America	1	3458	100	50
+American Eagle	Six Flags Great America	1	4650	127	66
+Ragin Bull	Six Flags Great America	2	5057	202	73
+Superman Ultimate Flight	Six Flags Great America	2	2798	106	51
+Magnum	Cedar Point	2	5106	205	72
+Gemini	Cedar Point	1	3935	125.3333333	60
+Mean Streak	Cedar Point	1	5427	161	65
+Millennium Force	Cedar Point	2	6595	310	93
+Raptor	Cedar Point	2	3790	137	57
+Top Thrill Dragster	Cedar Point	2	2800	420	120
+Mavrick	Cedar Point	2	4450	105	70
+Beast	Kings Island	1	7359	110	64.8
+Son of Beast	Kings Island	1	7032	218	78.4
+El Toro	Six Flags Great Adventure	1	4400	181	70
+Nitro	Six Flags Great Adventure	2	5394	230	80
+Kingda Ka	Six Flags Great Adventure	2	3118	456	128
+Alpengeist	Bucsh Gardens Europe	2	3828	195	67
+Apollos Chariot	Bucsh Gardens Europe	2	4882	170	73
+Big Bad Wolf	Bucsh Gardens Europe	2	2800	100	48
+Loch Ness Monster	Bucsh Gardens Europe	2	3240	130	60
+"Volcano, The Blast"	Kings Dominion	2	2757	155	70
+Hydra the Revenge	Dorney Park	2	3198	95	53
+Steel Force	Dorney Park	2	5600	200	75
+Talon	Dorney Park	2	3110	135	58
+Thunderhawk	Dorney Park	1	2767	80	45
+Phoenix	Knoebels 	1	3200	78	45
+Twister	Knoebels 	1	3900	101.5833333	51.5
+Batwing	Six Flags America	2	3340	115	50
+Roar	Six Flags America	1	3200	90	50
+Superman Ride of Steel	Six Flags America	2	5350	197	73
+Wild One	Six Flags America	1	4000	98	53
+Lighting Racer	Hersheypark	1	3400	90	51
+Storm Runner	Hersheypark	2	2600	150	75
+Wildcat 	Hersheypark	1	3183	90	50
+Rampage	Alabama Adventure	1	3500	120	56
+Zoomerang	Alabama Adventure	2	935	116.5	47
+Connonball Run	Waterville USA	1	1700	65	43
+Big Bad John	Magic Springs	2	2349	32	37
+Gauntlet	Magic Springs	2	2260.5	109.25	49.7
+X Coaster	Magic Springs	2	492.1666667	150.9166667	65.3
+Batman The Ride	Six Flags Magic Mountain	2	2700	105	50
+Boomerang	Knott's Berry Farm	2	935	116.5	47
+Boomerang Coast to Coaster	Six Flags Discovery Kingdom	2	935	116.5	47
+Coastersaurus	Legoland Californina	2	492.1666667	18.08333333	20.5
+Cobra	Six Flags Discovery Kingdom	2	1181.083333	26.25	22.4
+Colossus	Six Flags Magic Mountain	1	4325	125	62
+déjà vu	Six Flags Magic Mountain	2	1204	191.5833333	65.6
+Demon	California's Great America	2	2130	102	50
+Flight Deck	California's Great America	2	2260	102	50
+Gadget's Go Coaster	Disneyland	2	679.1666667	27.91666667	21.7
+Ghost Rider	Knott's Berry Farm	1	4533	118	56
+Giant Dipper	Belmont Park	1	2600	73	55
+Giant Dipper	Santa Cruz Beach Boardwalk	1	2640	70	55
+Gold Rusher	Six Flags Magic Mountain	2	2590	70	35
+Goliath	Six Flags Magic Mountain	2	4500	235	85
+Grizzly	California's Great America	1	3250	91	55
+Invertigo	California's Great America	2	1013.75	160.75	50
+Jaguar!	Knott's Berry Farm	2	2602	65	35
+Kong	Six Flags Discovery Kingdom	2	2260.5	109.25	49.7
+Medusa	Six Flags Discovery Kingdom	2	3937	150	65
+Merlin's Revenge	Castle Amusement Park	2	679.1666667	27.91666667	21.7
+Montezooma's Revenge	Knott's Berry Farm	2	800	148	55
+Ninja	Six Flags Magic Mountain	2	2700	60	55
+Revolution	Six Flags Magic Mountain	2	3457	113	55
+Riddler's Revenge	Six Flags Magic Mountain	2	4370	156	65
+Roar	Six Flags Discovery Kingdom	1	3467	95	50
+Scream!	Six Flags Magic Mountain	2	3985	150	63
+Screamer	Scandia Amusement Park	2	2600	90	50
+Sierra Sidewinder	Knott's Berry Farm	2	1410.75	62.33333333	37
+Silver Bullet	Knott's Berry Farm	2	3125	146	55
+Superman The Escaper	Six Flags Magic Mountain	2	1235	415	100
+Tatsu	Six Flags Magic Mountain	2	3602	170	62
+Technic Coaster	Legoland Californina	2	1312.333333	51.83333333	35
+V2: Vertical Velocity	Six Flags Discovery Kingdom	2	630	150	65
+Viper	Six Flags Magic Mountain	2	3830	188	70
+Vortex	California's Great America	2	1920	91	40
+X2	Six Flags Magic Mountain	2	3610	175	76
+Xcelerator	Knott's Berry Farm	2	2202	205	82
+Boomerang 	Elitch Gardens	2	935	116.5	47
+Flying Coaster	Elitch Gardens	2	1282.833333	50	25.7
+Half Pipe	Elitch Gardens	2	229.6666667	98.41666667	43.5
+Mind Eraser	Elitch Gardens	2	2260.5	109.25	49.7
+Sidewinder	Elitch Gardens	2	635	56	45
+Twister II	Elitch Gardens	1	4640	100	55
+Wild Chipmunk	Lakeside Amusement Park	2	1150	41	21
+Wildcat 	Lake Compounce	1	2746	85	48
+Zoomerang	Lake Compounce	2	935	116.5	47
+Cheeta Chase	Bucsh Gardens Africa	2	1213.916667	45.91666667	28
+Dueling Dragons	Universal Studios Islands of Adventure	2	3200	125	60
+Expedition Everest	Walt Disney World - Animal Kingdom	2	4424	112	50
+Flying Unicorn	Universal Studios Islands of Adventure	2	1099.083333	42.66666667	28.5
+Galaxy Spin	Cypress Gardens	2	1377.916667	42.66666667	29.1
+Gwazi	Busch Gardens Africa	1	3400	90	50
+Incrdible Hulk	Universal Studios Islands of Adventure	2	3700	110	67
+Kraken	Sea World Orlando	2	4177	149	65
+Kumba	Busch Gardens Africa	2	3978	143	60
+Montu	Busch Gardens Africa	2	3983	150	60
+Okeechobee Rampage	Cypress Gardens	2	1099.083333	42.66666667	28.5
+Primeval Whirl	Walt Disney World - Animal Kingdom	2	1377.916667	42.66666667	29.1
+Rock 'n' Roller Coaster	Walt Disney World - Hollywood Studios	2	3403	80	57
+Scorpion	Busch Gardens Africa	2	1817.583333	60.66666667	41
+SheiKra	Busch Gardens Africa	2	3188	200	70
+Space Mountain	Walt Disney World - Magic Kingdom	2	3196	90	27
+Swamp Thing	Cypress Gardens	2	1122.083333	48.58333333	26
+Triple Hurricane	Cypress Gardens	1	1365	40	32
+Woody Woodpecker's Nuthouse Coaster	Universal Studios Florida	2	679.1666667	27.91666667	21.7
+Ant Farm Express	Wild Adventures	2	679.1666667	27.91666667	21.7
+Batman The Ride	Six Flags Over Georgia	2	2700	105	50
+Boomerang	Wild Adventures	2	935	116.5	47
+Bug Out	Wild Adventures	2	1213.916667	49.25	28
+Cheeta	Wild Adventures	1	2680	92	52
+Dahlonega Mine Train	Six Flags Over Georgia	2	2323	37	29
+Georgia Cyclone	Six Flags Over Georgia	1	2970	95	50
